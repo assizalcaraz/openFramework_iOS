@@ -70,3 +70,38 @@ logs/
 git_info.txt
 *.git_*.txt
 *.git_*.sh
+
+# C++ / openFrameworks
+bin/
+obj/
+DerivedData/
+Build/
+*.o
+*.a
+*.dylib
+*.so
+*.dylib.dSYM/
+*.app.dSYM/
+
+# Xcode
+*.xcodeproj/xcuserdata/
+*.xcworkspace/xcuserdata/
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+xcuserdata/
+*.moved-aside
+*.hmap
+*.ipa
+*.xcuserstate
+project.xcworkspace/
+!default.xcworkspace/
+
+# openFrameworks build (directorio build del proyecto OF)
+../build/bin/
+../build/obj/
