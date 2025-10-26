@@ -155,4 +155,5 @@ Ver: `.cursor/config/cursor_supervisor.yaml`
 ---
 
 **Última Actualización**: 2025-10-26  
-**Estado**: Fase 1-4 completadas (47 tests, 89% cobertura, integración OSC/MIDI funcional)
+**Estado**: Fase 1-4 completadas, Fase 5-6 en progreso  
+**Migración C++**: Ver `docs/MIGRACION_CXX.md` para detalles
