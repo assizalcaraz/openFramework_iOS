@@ -263,3 +263,42 @@
   - Crear más ejemplos prácticos de uso
   - Documentar casos de uso específicos
   - Preparar migración a C++/openFrameworks para la app nativa
+
+### 2025-10-26 (Inicio Fase 6: Migración a C++/openFrameworks - 🔄 EN PROGRESO)
+- **CAMBIOS REALIZADOS**: 
+  - Proyecto base openFrameworks generado en `/Users/joseassizalcarazbaxter/Developer/iphone/build`
+  - Addons instalados: ofxMidi, ofxOsc, ofxGui
+  - Estructura de módulos creada en `src/modules/`
+  - Migración de código Python a C++ iniciada
+- **ARCHIVOS CREADOS EN BUILD**: 
+  - `src/modules/Utils.hpp`: Funciones matemáticas (normalizar, magnitud, mapeo)
+  - `src/modules/SensorManager.h`: Gestor de sensores con callbacks
+  - `src/modules/SensorManager.cpp`: Implementación del gestor
+  - `src/modules/CommunicationManager.h`: Gestor MIDI/OSC
+  - `src/modules/CommunicationManager.cpp`: Implementación comunicación
+- **ARCHIVOS MODIFICADOS**: 
+  - `src/ofApp.h`: Integrados módulos SensorManager y CommunicationManager
+  - `src/ofApp.cpp`: Implementada lógica de sensores y comunicación
+- **FUNCIONALIDADES MIGRADAS**: 
+  - Sistema de callbacks para sensores (Python → C++)
+  - Registro histórico de datos de sensores (últimos 100)
+  - Envío de mensajes OSC usando ofxOsc
+  - Envío de eventos MIDI usando ofxMidi
+  - Funciones matemáticas (normalización, magnitud, mapeo)
+  - Sistema de callbacks para procesar datos de sensores
+- **ESTADO**: 
+  - ✅ Estructura de módulos: Creada
+  - ✅ Módulos base: Migrados de Python a C++
+  - ✅ Integración: Implementada en ofApp
+  - 🔄 Sensores iOS nativos: Pendiente
+  - 🔄 Compilación y testing: Pendiente
+- **NOTAS IMPORTANTES**: 
+  - El código C++ replica la lógica del prototipo Python
+  - Por ahora usa datos simulados de sensores para testing
+  - La integración con sensores reales de iOS requiere trabajo adicional
+  - El proyecto usa ofxMidi y ofxOsc de openFrameworks
+- **PRÓXIMOS PASOS**: 
+  - Configurar sensores nativos de iOS (CoreMotion)
+  - Compilar y probar en iOS
+  - Optimizar rendimiento para 60fps
+  - Integrar drawing engine interactivo

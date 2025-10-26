@@ -63,12 +63,12 @@ Este repositorio Python es la **fase de investigación preliminar** antes de con
 - [x] Flujo completo instalación artística (integrated_demo.py)
 - [ ] Documentación de casos de uso
 
-### Fase 6: Migración a C++ / openFrameworks ⏳ PENDIENTE
-- [ ] Investigar estructura proyecto openFrameworks iOS
-- [ ] Crear proyecto iOS con openFrameworks
-- [ ] Migrar lógica Python a C++
-- [ ] Implementar sensores nativos iOS
-- [ ] Implementar comunicación MIDI/OSC nativa
+### Fase 6: Migración a C++ / openFrameworks 🔄 EN PROGRESO
+- [x] Investigar estructura proyecto openFrameworks iOS
+- [x] Crear proyecto iOS con openFrameworks
+- [x] Migrar lógica Python a C++
+- [ ] Implementar sensores nativos iOS (CoreMotion)
+- [x] Configurar addons OSC/MIDI (ofxOsc, ofxMidi)
 - [ ] Testing en dispositivo real iPhone 15
 
 ---
