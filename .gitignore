@@ -62,3 +62,11 @@ logs/
 # Python bytecode
 *.pyc
 .python-version
+
+# Archivos de salida de comandos Git
+.git_status_output.txt
+.git_status.txt
+.git_config_check.sh
+git_info.txt
+*.git_*.txt
+*.git_*.sh
