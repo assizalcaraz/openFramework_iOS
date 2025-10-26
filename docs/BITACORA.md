@@ -341,3 +341,48 @@
   - Hacer primera compilación iOS
   - Probar en simulador antes de dispositivo real
   - Implementar visualización de estado de red
+
+### 2025-10-26 (UI de Emisor con Visualización de Sensores - ✅ COMPLETADO)
+- **CAMBIOS REALIZADOS**: 
+  - UI mejorada para mostrar datos de sensores en tiempo real
+  - Gráficas visuales de acelerómetro X, Y, Z
+  - Visualización de valores numéricos con colores
+  - Estado de sensores y comunicación visible
+  - Historial de últimos 100 puntos para cada eje
+- **ARCHIVOS MODIFICADOS**: 
+  - `build/src/ofApp.h`: Añadidos métodos de visualización y buffers de datos
+  - `build/src/ofApp.cpp`: Implementada UI completa con gráficas
+- **FUNCIONALIDADES IMPLEMENTADAS**: 
+  - Visualización numérica de acelerómetro (X, Y, Z con colores)
+  - Gráficas de tiempo para cada eje (historial en vivo)
+  - Cálculo y visualización de magnitud del vector
+  - Estado visual de sensores y comunicación
+  - Últimos mensajes OSC visible
+  - Generación de datos simulados a 100 Hz (más realista)
+- **ESTADO**: 
+  - ✅ UI funcional con gráficas en tiempo real
+  - ✅ Visualización de sensores simulados
+  - ✅ Preparado para sensores reales iOS (CoreMotion)
+  - ✅ Listo para compilación y testing
+- **IMAGEN DE LA UI**: 
+  - Encabezado con título del app
+  - Estado de sensores/OSC (verde/rojo)
+  - Valores numéricos X, Y, Z con colores diferenciados
+  - Magnitud del vector
+  - 3 gráficas de tiempo (una por eje)
+  - Historial de mensajes OSC
+- **ESTRATEGIA IMPLEMENTADA**: 
+  - **Separación Emisor/Receptor**: UI de emisor lista
+  - **Visualización de datos**: Gráficas real-time
+  - **Datos simulados**: Preparado para reemplazar con CoreMotion
+  - **Próximo paso**: Compilar en iOS y testear
+- **VENTAJAS**: 
+  - Visualización inmediata de datos de sensores
+  - Fácil identificar si sensores funcionan
+  - Gráficas muestran patrones de movimiento
+  - Base sólida para cuando añadamos sensores reales
+- **PRÓXIMOS PASOS**: 
+  - Compilar app en iOS (simulador primero)
+  - Validar que UI se renderiza correctamente
+  - Reemplazar datos simulados por CoreMotion
+  - Añadir visualización para giroscopio y magnetómetro
