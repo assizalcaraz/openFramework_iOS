@@ -10,7 +10,7 @@
 **Trabajo preliminar de investigación. Objetivo build a openFramework 0.12 app on iphone 15. db, curl, sensorres. Referencias: Controladores MIDI/OSC, instalaciones artísticas donde usuario interviene la obra gestionando su dispositivo como si fuera un instrumento de dibujo.**
 
 ### Tipo de Proyecto
-**Python Library** - {{DESCRIPCION_TIPO_PROYECTO}}
+**Python Library** - Aplicación iOS con openFrameworks 0.12 para iPhone 15, integrando sensores, comunicación MIDI/OSC, y transformación del dispositivo en un instrumento de dibujo interactivo para instalaciones artísticas
 
 ### Metodología
 Este proyecto sigue la metodología establecida de Pre-Cursor, optimizada para desarrollo con agentes de IA.
@@ -189,14 +189,16 @@ cat .cursor/config/cursor_supervisor.yaml
 **Trabajo preliminar de investigación. Objetivo build a openFramework 0.12 app on iphone 15. db, curl, sensorres. Referencias: Controladores MIDI/OSC, instalaciones artísticas donde usuario interviene la obra gestionando su dispositivo como si fuera un instrumento de dibujo.**
 
 ### Características Esperadas
-- {{CARACTERISTICA_1}}
-- {{CARACTERISTICA_2}}
-- {{CARACTERISTICA_3}}
+- Integración con sensores del iPhone 15 (acelerómetro, giroscopio, brújula)
+- Comunicación MIDI/OSC para control externo de instalaciones artísticas
+- Transformación del dispositivo en instrumento de dibujo interactivo
+- Base de datos para almacenar patrones y configuraciones
+- Sistema de comunicación curl para sincronización de datos
 
 ### Casos de Uso
-1. {{CASO_USO_1}}
-2. {{CASO_USO_2}}
-3. {{CASO_USO_3}}
+1. Instalación artística interactiva donde el usuario dibuja con el iPhone como si fuera un instrumento
+2. Controlador MIDI/OSC para efectos visuales y sonoros en tiempo real
+3. Captura y procesamiento de datos de sensores para visualizaciones creativas
 
 ---
 
@@ -213,16 +215,16 @@ cat .cursor/config/cursor_supervisor.yaml
 
 ## 📞 Información de Contacto
 
-- **Autor**: Tu Nombre
-- **Email**: tu@email.com
-- **GitHub**: [@](https://github.com/)
-- **Proyecto**: []()
+- **Autor**: Assiz Alcaraz Baxter
+- **Email**: Por definir
+- **GitHub**: [@assizalcaraz](https://github.com/assizalcaraz)
+- **Proyecto**: [app](https://github.com/assizalcaraz/app)
 
 ---
 
 **Fecha de Creación**: 2025-10-26  
 **Última Actualización**: 2025-10-26  
-**Versión**: {{VERSION_PROYECTO}}
+**Versión**: 0.1.0-prealpha
 
 ---
 

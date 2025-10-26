@@ -64,6 +64,34 @@ Este documento establece las mejores prácticas de desarrollo universales que pu
 - Mantener estructura de directorios clara
 - Usar convenciones de nomenclatura consistentes
 
+### 4. **Supervisión Automática con Pre-Cursor**
+- Usar Cursor CLI Supervisor para monitoreo continuo
+- Detección automática de problemas de estructura
+- Correcciones automáticas basadas en metodología
+- Actualización automática de BITACORA.md
+
+#### Uso del Supervisor
+
+```bash
+# Desde el proyecto pre_cursor
+cd /Users/joseassizalcarazbaxter/Developer/pre_cursor/src
+
+# Supervisión única
+python -m pre_cursor.cli supervisor start /path/to/project
+
+# Supervisión continua (cada 10 minutos)
+python -m pre_cursor.cli supervisor start /path/to/project --daemon --interval 600
+```
+
+#### Qué Supervisa Automáticamente
+
+- ✅ Estructura del proyecto vs metodología
+- ✅ Archivos fuera de lugar (tests en /, etc.)
+- ✅ Funciones duplicadas y redundancias
+- ✅ Calidad y cobertura de tests
+- ✅ Cumplimiento de convenciones de commits
+- ✅ Actualización de BITACORA.md
+
 ---
 
 ## 📚 Gestión de Bitácora (BITACORA.md)

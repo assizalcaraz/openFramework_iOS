@@ -2,23 +2,50 @@
 
 ## Dependencias Principales
 
-# Dependencias principales
-# Añadir según necesidades
+# Core framework (para investigación y prototipo)
+numpy>=1.24.0
+
+# Comunicación MIDI/OSC
+python-osc>=1.8.0
+python-rtmidi>=1.5.0
+
+# Sensores y dispositivos móviles
+PyObjC>=10.0  # Para acceso a sensores de iOS
+pyobjc-framework-CoreMotion>=10.0  # Sensores de movimiento iOS
+
+# Base de datos
+sqlalchemy>=2.0.0
+aiosqlite>=0.19.0
+
+# HTTP/Networking (curl alternativo)
+requests>=2.31.0
+aiohttp>=3.9.0
+
+# Utilidades
+python-dotenv>=1.0.0
 
 ## Dependencias de Desarrollo
 
-# Dependencias principales
-# Añadir según necesidades
+# Testing
+pytest>=7.4.0
+pytest-asyncio>=0.21.0
+pytest-cov>=4.1.0
 
-## Dependencias de Testing
+# Code quality
+black>=23.0.0
+flake8>=6.0.0
+mypy>=1.5.0
 
-# Dependencias principales
-# Añadir según necesidades
+# Type stubs
+types-requests>=2.31.0
 
 ## Dependencias Opcionales
 
-# Dependencias principales
-# Añadir según necesidades
+# Visualización (para prototipo)
+matplotlib>=3.7.0
+
+# OpenFrameworks bridge (cuando esté disponible para Python)
+# openframeworks-python>=0.12.0
 
 ---
 
@@ -29,7 +56,7 @@
 pip install -r requirements.txt
 
 # Instalación con dependencias de desarrollo
-pip install -r requirements.txt -r requirements-dev.txt
+pip install -r requirements.txt
 
 # Instalación en modo desarrollo
 pip install -e .
@@ -37,9 +64,12 @@ pip install -e .
 
 ## Versiones Mínimas
 
-- Python: 3.8
-- requests: 2.28.0
+- Python: 3.10+
+- macOS: Para acceso a sensores de iOS vía PyObjC
 
 ---
+
+**Nota**: Este proyecto está en fase de investigación preliminar.
+Las dependencias pueden cambiar conforme avance el desarrollo de la app nativa con openFrameworks.
 
 **Generado automáticamente**: 2025-10-26

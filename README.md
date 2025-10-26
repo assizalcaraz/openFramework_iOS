@@ -5,13 +5,14 @@ Trabajo preliminar de investigación. Objetivo build a openFramework 0.12 app on
 ## 🚀 Inicio Rápido
 
 ### Requisitos
-- Python 3.8+
+- Python 3.10+
+- macOS (para acceso a sensores de iOS vía PyObjC)
 - Git
 
 ### Instalación
 ```bash
 # Clonar el repositorio
-git clone 
+git clone https://github.com/assizalcaraz/app.git
 cd app
 
 # Instalar dependencias
@@ -22,14 +23,27 @@ pytest
 ```
 
 ### Uso Básico
-```python
-from app import App
 
-# Ejemplo de uso
-# Crear instancia
-instancia = App()
-# Usar funcionalidad
-resultado = instancia.procesar()
+```python
+from src.app import App
+from src.sensors import SensorManager, SensorType
+from src.communication import CommunicationManager, OSCMessage
+
+# Ejemplo básico
+app = App()
+
+# Ejemplo con sensores
+sensor_manager = SensorManager()
+comm_manager = CommunicationManager()
+
+# Ejemplo de uso en instalación artística
+def process_sensor_data(data):
+    """Procesar datos del sensor y enviar OSC."""
+    osc_msg = OSCMessage("/instrument/position", [data.x, data.y, data.z])
+    comm_manager.send_osc(osc_msg, "192.168.1.100:8000")
+
+# Registrar callback
+sensor_manager.register_callback(SensorType.ACCELEROMETER, process_sensor_data)
 ```
 
 ## 📁 Estructura del Proyecto
@@ -37,16 +51,24 @@ resultado = instancia.procesar()
 ```
 app/
 ├── README.md                    # Este archivo
-├── BITACORA.md                 # Log de desarrollo
-├── roadmap_v1.md               # Plan de desarrollo
+├── CONTEXTO.md                  # Contexto del proyecto
+├── METODOLOGIA_DESARROLLO.md   # Metodología de desarrollo
 ├── requirements.txt            # Dependencias
 ├── src/                        # Código fuente
-│   ├── app.py # Módulo principal
+│   ├── app.py                  # Módulo principal
+│   ├── sensors.py              # Gestor de sensores del iPhone
+│   ├── communication.py        # Comunicación MIDI/OSC
 │   └── utils/                  # Utilidades
+│       ├── __init__.py
+│       └── helpers.py          # Funciones matemáticas
 ├── tests/                      # Pruebas
 │   ├── README.md              # Instrucciones de testing
 │   └── test_app.py
 ├── docs/                       # Documentación
+│   ├── BITACORA.md            # Log de desarrollo
+│   ├── CURSOR_GUIDE.md        # Guía para IA
+│   ├── roadmap_v1.md          # Plan de desarrollo
+│   └── TUTORIAL.md            # Tutorial de uso
 └── examples/                   # Ejemplos
 ```
 
@@ -74,12 +96,9 @@ Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) par
 
 ## 👨‍💻 Autor
 
-**Tu Nombre**
-- GitHub: [@](https://github.com/)
+**Assiz Alcaraz Baxter**
+- GitHub: [@](https://github.com/assizalcaraz)
 
-## 📞 Contacto
-
-tu@email.com
 
 ---
 

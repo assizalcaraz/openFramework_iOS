@@ -1,0 +1,38 @@
+# Cursor Supervisor Configuration
+# Proyecto: iPhone App con openFrameworks (Investigación Preliminar)
+
+project_name: "app"
+project_type: "Python Library (Investigación Preliminar)"
+version: "0.1.0-prealpha"
+
+# Configuración del Supervisor
+supervision:
+  enabled: true
+  check_interval: 600  # 10 minutos
+  auto_fix: true
+  test_supervisor: true
+  
+# Rutas a monitorear
+paths:
+  src: "src/"
+  tests: "tests/"
+  docs: "docs/"
+  
+# Archivos de metodología
+methodology:
+  bitacora: "docs/BITACORA.md"
+  roadmap: "docs/roadmap_v1.md"
+  cursor_guide: "docs/CURSOR_GUIDE.md"
+  
+# Tests
+testing:
+  coverage_target: 85
+  pytest: true
+  
+# Proyecto objetivo
+final_target:
+  framework: "openFrameworks 0.12"
+  platform: "iOS (iPhone 15)"
+  language: "C++"
+  status: "Investigación previa en Python"
+

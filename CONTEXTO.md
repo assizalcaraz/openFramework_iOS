@@ -3,9 +3,10 @@
 ## Información del Proyecto
 
 - **Nombre**: app
-- **Descripción**: Trabajo preliminar de investigación. Objetivo build a openFramework 0.12 app on iphone 15. db, curl, sensorres. Referencias: Controladores MIDI/OSC, instalaciones artísticas donde usuario interviene la obra gestionando su dispositivo como si fuera un instrumento de dibujo.
-- **Tipo**: Python Library
-- **Autor**: Tu Nombre
+- **Descripción**: Trabajo preliminar de investigación. Objetivo: build a openFrameworks 0.12 app on iPhone 15. Incluye: db, curl, sensores. Referencias: Controladores MIDI/OSC, instalaciones artísticas donde usuario interviene la obra gestionando su dispositivo como si fuera un instrumento de dibujo.
+- **Tipo**: Python Library (Investigación Preliminar)
+  - **Meta**: App nativa en C++ con [openFrameworks](https://openframeworks.cc/) para iPhone 15
+- **Autor**: Assiz Alcaraz Baxter
 - **Fecha de Creación**: 2025-10-26
 
 ## Estructura Generada
