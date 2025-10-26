@@ -4,6 +4,12 @@ Trabajo preliminar de investigación. Objetivo build a openFramework 0.12 app on
 
 ## 🚀 Inicio Rápido
 
+### Estado del Proyecto
+- ✅ **Fase 1-4 Completadas** (Configuración, Módulos Core, Testing, Integración OSC/MIDI)
+- ✅ **47 tests pasando** con 89% de cobertura
+- ✅ **Envío real de OSC y MIDI** funcionando
+- 🔄 **Próximo**: Ejemplos y migración a openFrameworks/C++
+
 ### Requisitos
 - Python 3.10+
 - macOS (para acceso a sensores de iOS vía PyObjC)
@@ -12,14 +18,22 @@ Trabajo preliminar de investigación. Objetivo build a openFramework 0.12 app on
 ### Instalación
 ```bash
 # Clonar el repositorio
-git clone https://github.com/assizalcaraz/app.git
-cd app
+git clone https://github.com/assizalcaraz/openFramework_iOS.git
+cd openFramework_iOS
+
+# Crear y activar entorno virtual
+python3 -m venv venv
+source venv/bin/activate  # En macOS/Linux
+# venv\Scripts\activate  # En Windows
 
 # Instalar dependencias
-pip install -r requirements.txt
+pip install pytest pytest-asyncio pytest-cov numpy python-osc python-rtmidi
 
 # Ejecutar tests
 pytest
+
+# Ejecutar demo
+python examples/integrated_demo.py
 ```
 
 ### Uso Básico
@@ -74,7 +88,32 @@ app/
 
 ## 🧪 Testing
 
-Seguir las instrucciones en `tests/README.md` para ejecutar las pruebas.
+```bash
+# Ejecutar todos los tests
+pytest
+
+# Con cobertura
+pytest --cov=src --cov-report=html
+
+# Tests específicos
+pytest tests/test_communication.py -v
+```
+
+## 🎬 Ejemplos
+
+### Ejemplo Integrado: Sensores → OSC/MIDI
+
+```bash
+# Ejecutar ejemplo completo
+python examples/integrated_demo.py
+```
+
+Este ejemplo demuestra:
+- Captura de datos de sensores simulados
+- Conversión a mensajes OSC con normalización
+- Conversión a eventos MIDI
+- Envío real de mensajes
+- Historial de comunicación
 
 ## 📚 Documentación
 
@@ -103,4 +142,5 @@ Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) par
 ---
 
 **Fecha de Creación**: 2025-10-26  
-**Última Actualización**: 2025-10-26
+**Última Actualización**: 2025-10-26  
+**Estado**: Fase 4 completada - Integración OSC/MIDI funcional

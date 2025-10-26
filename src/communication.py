@@ -14,6 +14,22 @@ from datetime import datetime
 
 logger = logging.getLogger(__name__)
 
+# Intentar importar bibliotecas OSC y MIDI
+try:
+    from pythonosc import udp_client
+    from pythonosc.osc_message_builder import OscMessageBuilder
+    OSC_AVAILABLE = True
+except ImportError:
+    OSC_AVAILABLE = False
+    logger.warning("python-osc no disponible, solo envío simulado")
+
+try:
+    import rtmidi
+    MIDI_AVAILABLE = True
+except ImportError:
+    MIDI_AVAILABLE = False
+    logger.warning("python-rtmidi no disponible, solo envío simulado")
+
 
 class OSCMessage:
     """Representa un mensaje OSC."""
@@ -84,11 +100,53 @@ class CommunicationManager:
     
     def __init__(self):
         """Inicializar el gestor de comunicación."""
-        self.osc_clients: Dict[str, any] = {}  # Guardará clientes OSC cuando se implemente
-        self.midi_outputs: List[any] = []  # Guardará salidas MIDI cuando se implemente
+        self.osc_clients: Dict[str, any] = {}  # Guardará clientes OSC
+        self.midi_output = None  # Guardará salida MIDI
         self.message_history: List[Dict] = []
         self.is_active = False
+        
+        # Inicializar MIDI si está disponible
+        if MIDI_AVAILABLE:
+            try:
+                self.midi_output = rtmidi.MidiOut()
+                available_ports = self.midi_output.get_ports()
+                if available_ports:
+                    self.midi_output.open_port(0)
+                    logger.info(f"MIDI inicializado - Puerto: {available_ports[0]}")
+                else:
+                    logger.warning("No hay puertos MIDI disponibles")
+            except Exception as e:
+                logger.error(f"Error inicializando MIDI: {e}")
+        
         logger.info("CommunicationManager inicializado")
+    
+    def _get_or_create_osc_client(self, target: str):
+        """
+        Obtener o crear un cliente OSC para el destino especificado.
+        
+        Args:
+            target: Destino en formato "host:port"
+            
+        Returns:
+            Cliente OSC o None si hubo error
+        """
+        if target in self.osc_clients:
+            return self.osc_clients[target]
+        
+        if not OSC_AVAILABLE:
+            logger.warning("python-osc no disponible, no se puede enviar OSC real")
+            return None
+        
+        try:
+            host, port_str = target.split(":")
+            port = int(port_str)
+            client = udp_client.UDPClient(host, port)
+            self.osc_clients[target] = client
+            logger.info(f"Cliente OSC creado para {target}")
+            return client
+        except Exception as e:
+            logger.error(f"Error creando cliente OSC para {target}: {e}")
+            return None
     
     def send_osc(self, message: OSCMessage, target: str = "localhost:8000") -> None:
         """
@@ -100,11 +158,25 @@ class CommunicationManager:
         """
         try:
             logger.info(f"Enviando OSC: {message}")
-            # TODO: Implementar envío real con python-osc
+            
+            # Intentar envío real si está disponible
+            client = self._get_or_create_osc_client(target)
+            if client is not None and OSC_AVAILABLE:
+                builder = OscMessageBuilder(message.address)
+                for arg in message.args:
+                    builder.add_arg(arg)
+                osc_msg = builder.build()
+                client.send(osc_msg)
+                logger.debug(f"OSC enviado realmente a {target}")
+            else:
+                logger.debug(f"OSC simulado (sin cliente real)")
+            
+            # Registrar en historial
             self.message_history.append({
                 "type": "osc",
                 "message": message.to_dict(),
-                "target": target
+                "target": target,
+                "sent": client is not None
             })
         except Exception as e:
             logger.error(f"Error enviando OSC: {e}")
@@ -118,10 +190,28 @@ class CommunicationManager:
         """
         try:
             logger.info(f"Enviando MIDI: {event}")
-            # TODO: Implementar envío real con python-rtmidi
+            
+            # Intentar envío real si está disponible
+            sent = False
+            if self.midi_output is not None and MIDI_AVAILABLE:
+                try:
+                    # Construir mensaje MIDI: [status byte, note, velocity]
+                    # Status: 0x90 + channel (Note On), 0x80 + channel (Note Off)
+                    status = 0x90 | (event.channel & 0x0F)
+                    midi_msg = [status, event.note & 0x7F, event.velocity & 0x7F]
+                    self.midi_output.send_message(midi_msg)
+                    logger.debug("MIDI enviado realmente")
+                    sent = True
+                except Exception as e:
+                    logger.error(f"Error enviando MIDI real: {e}")
+            else:
+                logger.debug("MIDI simulado (sin salida real)")
+            
+            # Registrar en historial
             self.message_history.append({
                 "type": "midi",
-                "message": event.to_dict()
+                "message": event.to_dict(),
+                "sent": sent
             })
         except Exception as e:
             logger.error(f"Error enviando MIDI: {e}")
@@ -164,6 +254,15 @@ class CommunicationManager:
     def stop(self) -> None:
         """Detener comunicación."""
         self.is_active = False
+        
+        # Cerrar salida MIDI
+        if self.midi_output is not None:
+            try:
+                self.midi_output.close_port()
+                logger.info("Salida MIDI cerrada")
+            except Exception as e:
+                logger.error(f"Error cerrando MIDI: {e}")
+        
         logger.info("Comunicación detenida")
     
     def get_history(self, count: Optional[int] = None) -> List[Dict]:

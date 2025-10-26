@@ -158,7 +158,7 @@ class TestCommunicationManager:
     def test_initialization(self):
         """
         Test de inicialización de CommunicationManager.
-        
+    
         Casos cubiertos:
         - Éxito: Inicialización exitosa
         - Estado: Listas vacías inicialmente
@@ -168,7 +168,8 @@ class TestCommunicationManager:
         
         # Assert
         assert manager.osc_clients == {}
-        assert manager.midi_outputs == []
+        # midi_output puede ser None o un objeto MidiOut
+        assert manager.midi_output is None or hasattr(manager.midi_output, 'send_message')
         assert manager.message_history == []
         assert manager.is_active is False
     
