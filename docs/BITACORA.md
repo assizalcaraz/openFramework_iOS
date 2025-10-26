@@ -302,3 +302,42 @@
   - Compilar y probar en iOS
   - Optimizar rendimiento para 60fps
   - Integrar drawing engine interactivo
+
+### 2025-10-26 (Estrategia de Despliegue y Testing - ✅ DOCUMENTADO)
+- **CAMBIOS REALIZADOS**: 
+  - Documentación completa de estrategia de despliegue creada
+  - Módulo OSCReceiver implementado para constatar comunicación
+  - Script de prueba OSC en Python creado
+  - Guía de testing y troubleshooting documentada
+- **ARCHIVOS CREADOS**: 
+  - `docs/ESTRATEGIA_DESPLIEGUE_IOS.md`: Estrategia completa de despliegue
+  - `build/src/modules/OSCReceiver.h`: Header del receptor
+  - `build/src/modules/OSCReceiver.cpp`: Implementación del receptor
+  - `build/tests/test_osc_receiver.py`: Receptor de prueba OSC
+  - `build/README_TESTING.md`: Guía de testing
+- **FUNCIONALIDADES IMPLEMENTADAS**: 
+  - Receptor OSC para constatar comunicación
+  - Sistema de logging de mensajes recibidos
+  - Contadores de mensajes y timestamps
+  - Script de prueba externo en Python
+- **ESTRATEGIA DEFINIDA**: 
+  - **Fase 1**: Testing localhost (ANTES de despliegue) ✅
+  - **Fase 2**: Testing LAN (red local) ✅
+  - **Fase 3**: Despliegue mínimo iOS (UI solo) 📋
+  - **Fase 4**: Despliegue completo (sensores reales) 📋
+- **ARQUITECTURA PROPUESTA**: 
+  - Emisor (iPhone) ↔ Receptor (Mac/externo)
+  - Diferencia clara entre modos
+  - Visualización de estado de conexión
+  - Sistema de logging integrado
+- **RESPUESTAS A PREGUNTAS**: 
+  - ✅ **Cómo se conecta**: OSC vía LAN/WiFi, MIDI vía puertos virtuales
+  - ✅ **Se puede simular localhost**: SÍ, usando test_osc_receiver.py
+  - ✅ **Despliegue mínimo**: SÍ conviene, estrategia incremental documentada
+  - ✅ **Diferenciar emisor/receptor**: Implementado OSCReceiver separado
+  - ✅ **Constatación de comunicación**: Visual indicators + logging
+- **PRÓXIMOS PASOS**: 
+  - Integrar OSCReceiver en ofApp para modo receptor
+  - Hacer primera compilación iOS
+  - Probar en simulador antes de dispositivo real
+  - Implementar visualización de estado de red
