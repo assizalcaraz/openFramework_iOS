@@ -1,0 +1,45 @@
+# app - Requirements
+
+## Dependencias Principales
+
+# Dependencias principales
+# Añadir según necesidades
+
+## Dependencias de Desarrollo
+
+# Dependencias principales
+# Añadir según necesidades
+
+## Dependencias de Testing
+
+# Dependencias principales
+# Añadir según necesidades
+
+## Dependencias Opcionales
+
+# Dependencias principales
+# Añadir según necesidades
+
+---
+
+## Instalación
+
+```bash
+# Instalación básica
+pip install -r requirements.txt
+
+# Instalación con dependencias de desarrollo
+pip install -r requirements.txt -r requirements-dev.txt
+
+# Instalación en modo desarrollo
+pip install -e .
+```
+
+## Versiones Mínimas
+
+- Python: 3.8
+- requests: 2.28.0
+
+---
+
+**Generado automáticamente**: 2025-10-26
