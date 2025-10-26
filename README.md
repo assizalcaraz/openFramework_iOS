@@ -1,6 +1,15 @@
-# app
+# app - openFrameworks iOS Prototype
 
-Trabajo preliminar de investigación. Objetivo build a openFramework 0.12 app on iphone 15. db, curl, sensorres. Referencias: Controladores MIDI/OSC, instalaciones artísticas donde usuario interviene la obra gestionando su dispositivo como si fuera un instrumento de dibujo.
+Proyecto de investigación preliminar en Python para el desarrollo de una aplicación iOS nativa con **openFrameworks 0.12** para iPhone 15.
+
+## 🎯 Objetivo
+
+Crear una aplicación interactiva que:
+- **Utiliza sensores del iPhone 15** (acelerómetro, giroscopio, brújula)
+- **Se comunica vía MIDI/OSC** para controlar instalaciones artísticas
+- **Transforma el iPhone en un instrumento de dibujo interactivo**
+
+Este repositorio Python sirve como **prototipo de investigación** antes de construir la aplicación nativa en C++ con openFrameworks.
 
 ## 🚀 Inicio Rápido
 
@@ -38,52 +47,102 @@ python examples/integrated_demo.py
 
 ### Uso Básico
 
+**Ejemplo 1: Enviar mensaje OSC**
 ```python
-from src.app import App
-from src.sensors import SensorManager, SensorType
 from src.communication import CommunicationManager, OSCMessage
 
-# Ejemplo básico
-app = App()
+# Inicializar gestor de comunicación
+comm_manager = CommunicationManager()
+comm_manager.start()
 
-# Ejemplo con sensores
+# Crear y enviar mensaje OSC
+msg = OSCMessage("/instrument/x", [0.5, 0.7, 0.9])
+comm_manager.send_osc(msg, "localhost:8000")
+
+comm_manager.stop()
+```
+
+**Ejemplo 2: Enviar evento MIDI**
+```python
+from src.communication import CommunicationManager, MIDIEvent
+
+comm_manager = CommunicationManager()
+comm_manager.start()
+
+# Crear y enviar evento MIDI
+event = MIDIEvent(note=64, velocity=127, channel=0)
+comm_manager.send_midi(event)
+
+comm_manager.stop()
+```
+
+**Ejemplo 3: Callbacks con sensores simulados**
+```python
+from src.sensors import SensorManager, SensorType, SensorData
+from src.communication import CommunicationManager, OSCMessage
+
+# Inicializar gestores
 sensor_manager = SensorManager()
 comm_manager = CommunicationManager()
 
-# Ejemplo de uso en instalación artística
-def process_sensor_data(data):
+# Callback que procesa datos del sensor
+def process_sensor_data(data: SensorData):
     """Procesar datos del sensor y enviar OSC."""
-    osc_msg = OSCMessage("/instrument/position", [data.x, data.y, data.z])
-    comm_manager.send_osc(osc_msg, "192.168.1.100:8000")
+    msg = OSCMessage(f"/sensor/{data.type.value}", [data.x, data.y, data.z])
+    comm_manager.send_osc(msg, "localhost:8000")
 
-# Registrar callback
+# Registrar callback y procesar
 sensor_manager.register_callback(SensorType.ACCELEROMETER, process_sensor_data)
+sensor_manager.start()
+comm_manager.start()
+
+# Simular dato de sensor
+sensor_data = SensorData(
+    type=SensorType.ACCELEROMETER,
+    x=0.1, y=0.2, z=0.3,
+    timestamp=0.0
+)
+sensor_manager.record_data(SensorType.ACCELEROMETER, sensor_data)
+
+sensor_manager.stop()
+comm_manager.stop()
+```
+
+**Para un ejemplo completo y funcional**, ejecuta:
+```bash
+python examples/integrated_demo.py
 ```
 
 ## 📁 Estructura del Proyecto
 
 ```
 app/
-├── README.md                    # Este archivo
-├── CONTEXTO.md                  # Contexto del proyecto
-├── METODOLOGIA_DESARROLLO.md   # Metodología de desarrollo
-├── requirements.txt            # Dependencias
-├── src/                        # Código fuente
-│   ├── app.py                  # Módulo principal
-│   ├── sensors.py              # Gestor de sensores del iPhone
-│   ├── communication.py        # Comunicación MIDI/OSC
-│   └── utils/                  # Utilidades
+├── README.md                          # Este archivo
+├── CONTEXTO.md                        # Contexto del proyecto
+├── METODOLOGIA_DESARROLLO.md          # Metodología de desarrollo
+├── requirements.txt                   # Dependencias
+├── venv/                              # Entorno virtual (ignorado)
+├── src/                               # Código fuente
+│   ├── app.py                        # Módulo principal
+│   ├── sensors.py                    # Gestor de sensores del iPhone
+│   ├── communication.py              # Comunicación MIDI/OSC
+│   └── utils/                        # Utilidades
 │       ├── __init__.py
-│       └── helpers.py          # Funciones matemáticas
-├── tests/                      # Pruebas
-│   ├── README.md              # Instrucciones de testing
-│   └── test_app.py
-├── docs/                       # Documentación
-│   ├── BITACORA.md            # Log de desarrollo
-│   ├── CURSOR_GUIDE.md        # Guía para IA
-│   ├── roadmap_v1.md          # Plan de desarrollo
-│   └── TUTORIAL.md            # Tutorial de uso
-└── examples/                   # Ejemplos
+│       └── helpers.py                # Funciones matemáticas
+├── tests/                             # Pruebas
+│   ├── README.md                     # Instrucciones de testing
+│   ├── conftest.py                   # Configuración pytest
+│   ├── test_app.py                   # Tests del módulo app
+│   ├── test_sensors.py               # Tests del módulo sensors
+│   ├── test_communication.py         # Tests del módulo communication
+│   └── test_utils.py                 # Tests del módulo utils
+├── docs/                              # Documentación
+│   ├── BITACORA.md                   # Log de desarrollo
+│   ├── CURSOR_GUIDE.md               # Guía para IA
+│   ├── roadmap_v1.md                  # Plan de desarrollo
+│   └── TUTORIAL.md                   # Tutorial de uso
+└── examples/                          # Ejemplos
+    └── integrated_demo.py            # Demo integrada sensores → OSC/MIDI
 ```
 
 ## 🧪 Testing
@@ -117,9 +176,15 @@ Este ejemplo demuestra:
 
 ## 📚 Documentación
 
-- [Tutorial de Inicio](docs/TUTORIAL.md)
-- [API Reference](docs/API.md)
-- [Contributing](CONTRIBUTING.md)
+- **BITACORA**: Registro completo de desarrollo en `docs/BITACORA.md`
+- **Roadmap**: Plan de desarrollo y estado actual en `docs/roadmap_v1.md`
+- **Metodología**: Guía de desarrollo en `METODOLOGIA_DESARROLLO.md`
+- **Contexto**: Información del proyecto en `CONTEXTO.md`
+
+**Para más detalles sobre el roadmap**:
+- Fase 1-4: ✅ Completadas (Configuración, Core, Tests, Integración)
+- Fase 5: 🔄 En progreso (Ejemplos y Demos)
+- Fase 6: ⏳ Pendiente (Migración a C++/openFrameworks)
 
 ## 🤝 Contribuir
 
@@ -131,16 +196,26 @@ Este ejemplo demuestra:
 
 ## 📄 Licencia
 
-Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) para detalles.
+Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más detalles (si aplica).
 
 ## 👨‍💻 Autor
 
 **Assiz Alcaraz Baxter**
-- GitHub: [@](https://github.com/assizalcaraz)
-
+- GitHub: [@assizalcaraz](https://github.com/assizalcaraz)
 
 ---
 
-**Fecha de Creación**: 2025-10-26  
-**Última Actualización**: 2025-10-26  
+## 📊 Estado Actual del Proyecto
+
+**Última Actualización**: 2025-10-26
+
 **Estado**: Fase 4 completada - Integración OSC/MIDI funcional
+
+- ✅ Entorno virtual configurado
+- ✅ Bibliotecas python-osc y python-rtmidi integradas
+- ✅ Envío real de mensajes OSC y MIDI funcionando
+- ✅ 47 tests pasando (89% cobertura)
+- ✅ Ejemplo integrado disponible (`examples/integrated_demo.py`)
+- 🔄 Próximo: Documentación de casos de uso y preparación para migración a C++/openFrameworks
+
+**Repositorio**: [openFramework_iOS](https://github.com/assizalcaraz/openFramework_iOS.git)
